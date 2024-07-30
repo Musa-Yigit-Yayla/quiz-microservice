@@ -32,6 +32,7 @@ spec:
               mountPath: /var/lib/mysql
             - name: init-scripts
               mountPath: /docker-entrypoint-initdb.d
+              readOnly: true
       volumes:
         - name: mysql-storage
           emptyDir: {}
