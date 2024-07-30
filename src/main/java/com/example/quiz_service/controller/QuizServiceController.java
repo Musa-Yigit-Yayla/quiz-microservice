@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 class QuizServiceController{
     private QuizServiceService quizService = null;
 
-    public QuizServiceController() {
-        this.quizService = new QuizServiceService();
+    public QuizServiceController(QuizServiceService quizServiceService) {
+        this.quizService = quizServiceService;
     }
 
     @GetMapping("/getQuestion/{topic}/{difficulty}")
@@ -21,6 +21,14 @@ class QuizServiceController{
         if(response != null){
             result = response.toString();
         }
+        return result;
+    }
+    @PostMapping("/createUser")
+    /**
+     * @return a string in the format id:password for later login use of the newly created user
+     */
+    public String createUser(){
+        String result = this.quizService.createUser();
         return result;
     }
 }

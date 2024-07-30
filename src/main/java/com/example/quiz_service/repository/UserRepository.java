@@ -20,7 +20,9 @@ public class UserRepository{
 
     //Adds a user to the user table with automatically generated 8 char length password
     public String addUser(){
+        String result = "";
         String password = "";
+        long id = -1;
         final int PASSWORD_LENGTH = 8;
 
         for(int i = 0; i < PASSWORD_LENGTH; i++){
@@ -32,11 +34,19 @@ public class UserRepository{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, password); //1 based indexing
             ps.executeUpdate();
+
+            //now select the largest id of the user table
+            query = "SELECT MAX(id) AS max_id FROM user;";
+            PreparedStatement ps0 = connection.prepareStatement(query);
+            ResultSet rs = ps0.executeQuery();
+            id = rs.getLong("max_id");
         }
         catch(SQLException ex){
             System.out.println(ex.getMessage());
         }
-        return password;
+
+        result = id + ":" + password;
+        return result;
     }
     public String getPassword(long id){
         String password = "";
