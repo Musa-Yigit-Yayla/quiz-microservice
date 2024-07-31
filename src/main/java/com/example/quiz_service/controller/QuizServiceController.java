@@ -23,10 +23,11 @@ class QuizServiceController{
         }
         return result;
     }
-    @PostMapping("/createUser")
+
     /**
      * @return a string in the format id:password for later login use of the newly created user
      */
+    @PostMapping("/createUser")
     public String createUser(){
         String result = this.quizService.createUser();
         return result;
