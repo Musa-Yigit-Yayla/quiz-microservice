@@ -1,71 +1,46 @@
 package com.example.quiz_service.repository;
-import org.springframework.stereotype.Repository;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.sql.SQLException;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserRepository{
-    private JdbcTemplate jdbcTemplate;
-    private Connection connection;
+public class UserRepository {
+
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public UserRepository(JdbcTemplate jdbcTemplate, DataSource dataSource) throws SQLException{
+    public UserRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.connection = dataSource.getConnection();
     }
 
-    //Adds a user to the user table with automatically generated 8 char length password
-    public String addUser(){
+    public String addUser() {
         String result = "";
         String password = "";
         long id = -1;
         final int PASSWORD_LENGTH = 8;
 
-        for(int i = 0; i < PASSWORD_LENGTH; i++){
-            password += (char)(Math.random() * 128);
+        for (int i = 0; i < PASSWORD_LENGTH; i++) {
+            password += (char) (Math.random() * 128);
         }
 
-        try{
+        try {
             String query = "INSERT INTO user (password) VALUES (?);";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, password); //1 based indexing
-            ps.executeUpdate();
+            jdbcTemplate.update(query, password);
 
-            //now select the largest id of the user table
+            // Now select the largest id of the user table
             query = "SELECT MAX(id) AS max_id FROM user;";
-            PreparedStatement ps0 = connection.prepareStatement(query);
-            ResultSet rs = ps0.executeQuery();
-            id = rs.getLong("max_id");
-        }
-        catch(SQLException ex){
+            id = jdbcTemplate.queryForObject(query, Long.class);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
 
         result = id + ":" + password;
         return result;
     }
-    public String getPassword(long id){
-        String password = "";
 
-        try{
-            String query = "SELECT password FROM user WHERE id = ?;";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setLong(1, id);
-            ResultSet rs = ps.executeQuery();
-
-            if(rs.next()){
-                password = rs.getString("password");
-            }
-        }
-        catch(SQLException ex){
-            System.out.println(ex.getMessage());
-        }
-        return password;
+    public String getPassword(long id) {
+        String query = "SELECT password FROM user WHERE id = ?;";
+        return jdbcTemplate.queryForObject(query, new Object[]{id}, String.class);
     }
 }
