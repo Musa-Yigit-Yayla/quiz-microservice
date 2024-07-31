@@ -2,6 +2,7 @@ package com.example.quiz_service.controller;
 
 import com.example.quiz_service.Dto.QuestionDto;
 import com.example.quiz_service.service.QuizServiceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 class QuizServiceController{
     private QuizServiceService quizService = null;
 
+    @Autowired //constructor injection
     public QuizServiceController(QuizServiceService quizServiceService) {
         this.quizService = quizServiceService;
     }

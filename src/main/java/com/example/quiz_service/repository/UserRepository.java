@@ -1,6 +1,7 @@
 package com.example.quiz_service.repository;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
 import javax.sql.DataSource;
@@ -13,6 +14,7 @@ public class UserRepository{
     private JdbcTemplate jdbcTemplate;
     private Connection connection;
 
+    @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate, DataSource dataSource) throws SQLException{
         this.jdbcTemplate = jdbcTemplate;
         this.connection = dataSource.getConnection();
