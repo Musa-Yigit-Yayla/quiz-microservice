@@ -14,24 +14,25 @@ public class UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public String addUser() {
+    public String addUser(){
         String result = "";
         String password = "";
         long id = -1;
         final int PASSWORD_LENGTH = 8;
 
-        for (int i = 0; i < PASSWORD_LENGTH; i++) {
+        for(int i = 0; i < PASSWORD_LENGTH; i++){
             password += (char) (Math.random() * 128);
         }
 
-        try {
+        try{
             String query = "INSERT INTO user (password) VALUES (?);";
             jdbcTemplate.update(query, password);
 
             // Now select the largest id of the user table
             query = "SELECT MAX(id) AS max_id FROM user;";
             id = jdbcTemplate.queryForObject(query, Long.class);
-        } catch (Exception ex) {
+        }
+        catch(Exception ex){
             System.out.println(ex.getMessage());
         }
 
@@ -39,7 +40,7 @@ public class UserRepository {
         return result;
     }
 
-    public String getPassword(long id) {
+    public String getPassword(long id){
         String query = "SELECT password FROM user WHERE id = ?;";
         return jdbcTemplate.queryForObject(query, new Object[]{id}, String.class);
     }
