@@ -22,7 +22,7 @@ spec:
             - name: DB_HOST
               value: "mysql-service" #this should match
             - name: DB_PORT
-              value: "3306" #default mysql port
+              value: "3307" #default mysql port
             - name: DB_NAME
               value: "mydb"
             - name: DB_USER
