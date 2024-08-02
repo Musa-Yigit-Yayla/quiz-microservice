@@ -17,7 +17,7 @@ class QuizServiceController{
 
     @GetMapping("/getQuestion/{topic}/{difficulty}")
     public String getQuestion(@PathVariable("topic") String topic, @PathVariable("difficulty") String difficulty){
-        String result = "xddd";
+        String result = "xdddddaaddd";
         QuestionDto response = this.quizService.getQuestion(topic, difficulty);
 
         if(response != null){
@@ -31,7 +31,23 @@ class QuizServiceController{
      */
     @PostMapping("/createUser")
     public String createUser(){
-        String result = this.quizService.createUser();
-        return result;
+        try {
+            String result = this.quizService.createUser();
+            return result;
+        }
+        catch(Exception ex){
+            return ex.getMessage();
+        }
+    }
+    @GetMapping("/testdb")
+    public String testDatabaseConnection() {
+        try {
+
+            return this.quizService.healthCheck();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "Database connection failed: " + e.getMessage();
+        }
     }
 }

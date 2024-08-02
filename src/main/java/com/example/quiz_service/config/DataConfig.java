@@ -1,46 +1,36 @@
 package com.example.quiz_service.config;
 
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.context.ApplicationContext;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Configuration
 public class DataConfig {
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    private static final Logger logger = LoggerFactory.getLogger(DataConfig.class);
+
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://mysql-service:3307/mydb");
         dataSource.setUsername("user");
         dataSource.setPassword("password");
 
+        logger.debug("DataSource configured with URL: {}", dataSource.getUrl());
         return dataSource;
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource){
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
-    }
-
-    @PostConstruct
-    public void printDataSourceInfo() {
-        DataSource dataSource = (DataSource) applicationContext.getBean("dataSource");
-        if (dataSource instanceof DriverManagerDataSource) {
-            DriverManagerDataSource driverManagerDataSource = (DriverManagerDataSource) dataSource;
-            System.out.println("DataSource URL: " + driverManagerDataSource.getUrl());
-            System.out.println("DataSource Username: " + driverManagerDataSource.getUsername());
-        }
-        else {
-            System.out.println("DataSource is not of type DriverManagerDataSource");
-        }
     }
 }

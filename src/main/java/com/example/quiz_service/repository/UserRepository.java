@@ -10,7 +10,7 @@ public class UserRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public UserRepository(JdbcTemplate jdbcTemplate) {
+    public UserRepository(JdbcTemplate jdbcTemplate) throws Exception {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -34,6 +34,7 @@ public class UserRepository {
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());
+            throw ex;
         }
 
         result = id + ":" + password;
@@ -43,5 +44,21 @@ public class UserRepository {
     public String getPassword(long id){
         String query = "SELECT password FROM user WHERE id = ?;";
         return jdbcTemplate.queryForObject(query, new Object[]{id}, String.class);
+    }
+
+    public String healthCheck() {
+        String response = "bad-response";
+
+        try {
+            response = "Good response";
+            jdbcTemplate.execute("SELECT 1");
+        }
+        catch(Exception ex){
+            response = ex.getMessage();
+            return response;
+        }
+        finally{
+            return response;
+        }
     }
 }
