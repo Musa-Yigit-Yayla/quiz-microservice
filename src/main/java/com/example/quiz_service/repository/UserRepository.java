@@ -25,7 +25,7 @@ public class UserRepository {
         }
 
         try{
-            String query = "INSERT INTO user (password) VALUES (?);";
+            String query = "INSERT INTO user(password) VALUES (?);";
             jdbcTemplate.update(query, password);
 
             // Now select the largest id of the user table

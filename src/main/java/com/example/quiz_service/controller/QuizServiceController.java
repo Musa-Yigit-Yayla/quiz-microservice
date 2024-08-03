@@ -39,6 +39,21 @@ class QuizServiceController{
             return ex.getMessage();
         }
     }
+    @PostMapping("/addQuestion/{userId}/{password}/{body}/{answer0}/{answer1}/{answer2}/{answer3}/{answerIndex}")
+    public void addQuestion(@PathVariable("userId") int userId, @PathVariable("password") String password,
+                            @PathVariable("body") String body,
+                            @PathVariable("answer0") String answer0, @PathVariable("answer1") String answer1,
+                            @PathVariable("answer2") String answer2, @PathVariable("answer3") String answer3,
+                            @PathVariable("answerIndex") int answerIndex){
+        this.quizService.addQuestion(userId, password, body, answer0, answer1, answer2, answer3, answerIndex);
+    }
+
+    @PostMapping("/createTest/{userId}/{password}/{name}/{tag}")
+    public void createTest(@PathVariable int userId, @PathVariable String password, @PathVariable String name,
+                           @PathVariable String tag){
+        this.quizService.createTest(userId, password, name, tag);
+    }
+
     @GetMapping("/testdb")
     public String testDatabaseConnection() {
         try {
@@ -50,4 +65,5 @@ class QuizServiceController{
             return "Database connection failed: " + e.getMessage();
         }
     }
+
 }
