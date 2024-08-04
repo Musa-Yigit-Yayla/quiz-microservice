@@ -54,6 +54,11 @@ class QuizServiceController{
         this.quizService.createTest(userId, password, name, tag);
     }
 
+    @GetMapping("/getTestAddRequests/{userId}/{password}/{testName}")
+    public void getTestAddRequests(@PathVariable int userId, @PathVariable String password, @PathVariable String testName){
+        //ToDo
+    }
+
     @GetMapping("/testdb")
     public String testDatabaseConnection() {
         try {

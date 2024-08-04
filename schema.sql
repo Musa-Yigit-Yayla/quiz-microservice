@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS test (
                                     ownerId INT,
                                     name TEXT NOT NULL,
                                     tag TEXT NOT NULL,
+                                    UNIQUE(ownerId, name),
                                     FOREIGN KEY (ownerId) REFERENCES user(id)
     );
 
@@ -60,9 +61,22 @@ CREATE TABLE IF NOT EXISTS question_tag_request(
     );
 
 DROP TRIGGER IF EXISTS release_tag_requests;
-CREATE TRIGGER release_tag_requests(
+CREATE TRIGGER release_tag_requests
+    BEFORE DELETE ON question_tag_request
+    FOR EACH ROW
+BEGIN
+    DELETE FROM question_tag_request
+    WHERE questionId = OLD.questionId AND tag = OLD.tag
+END;
 
-);
+DROP TRIGGER IF EXISTS release_add_requests;
+CREATE TRIGGER release_add_requests
+    BEFORE DELETE ON test_add_request
+    FOR EACH ROW
+BEGIN
+    DELETE FROM test_add_request
+    WHERE testId = OLD.testId AND questionId = OLD.questionId
+END;
 
 DROP TRIGGER IF EXISTS disallow_owner_qtr;
 CREATE TRIGGER disallow_owner_qtr(
