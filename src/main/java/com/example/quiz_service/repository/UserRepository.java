@@ -4,14 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+
 @Repository
 public class UserRepository {
-
     private final JdbcTemplate jdbcTemplate;
+    private final Connection connection;
 
     @Autowired
-    public UserRepository(JdbcTemplate jdbcTemplate) throws Exception {
+    public UserRepository(JdbcTemplate jdbcTemplate, DataSource dataSource) throws Exception {
         this.jdbcTemplate = jdbcTemplate;
+        this.connection = dataSource.getConnection();
     }
 
     public String addUser(){

@@ -12,15 +12,17 @@ CREATE TABLE IF NOT EXISTS question (
                                         answer2 TEXT NOT NULL,
                                         answer3 TEXT NOT NULL,
                                         answer_index INT,
+                                        difficulty VARCHAR(10),
                                         FOREIGN KEY(ownerId) REFERENCES user(id),
-    CHECK(answer_index < 4 AND answer_index >= 0)
-    );
+    CHECK(answer_index < 4 AND answer_index >= 0),
+    CHECK(difficulty IN ('easy', 'medium', 'hard', 'extreme'))
+);
 
 CREATE TABLE IF NOT EXISTS test (
                                     id INT PRIMARY KEY AUTO_INCREMENT,
                                     ownerId INT,
                                     name TEXT NOT NULL,
-                                    tag TEXT NOT NULL,
+                                    tag VARCHAR(30) NOT NULL,
                                     UNIQUE(ownerId, name),
                                     FOREIGN KEY (ownerId) REFERENCES user(id)
     );
@@ -35,7 +37,7 @@ CREATE TABLE IF NOT EXISTS test_questions (
 
 CREATE TABLE IF NOT EXISTS question_tags (
                                              questionId INT,
-                                             tag TEXT,
+                                             tag VARCHAR(30),
                                              PRIMARY KEY (questionId, tag),
     FOREIGN KEY(questionId) REFERENCES question(id)
     );
@@ -52,13 +54,15 @@ CREATE TABLE IF NOT EXISTS test_add_request(
     );
 CREATE TABLE IF NOT EXISTS question_tag_request(
                                                    questionId INT,
-                                                   tag TEXT,
+                                                   tag VARCHAR(30),
                                                    requesterId INT,
                                                    PRIMARY KEY(questionId, requesterId, tag),
     FOREIGN KEY(questionId) REFERENCES question(id),
     FOREIGN KEY(requesterId) REFERENCES user(id),
     CHECK (requesterId <> (SELECT ownerId FROM question WHERE question.id = questionId))
-    );
+);
+
+delimiter ^;
 
 DROP TRIGGER IF EXISTS release_tag_requests;
 CREATE TRIGGER release_tag_requests
@@ -66,8 +70,8 @@ CREATE TRIGGER release_tag_requests
     FOR EACH ROW
 BEGIN
     DELETE FROM question_tag_request
-    WHERE questionId = OLD.questionId AND tag = OLD.tag
-END;
+    WHERE questionId = OLD.questionId AND tag = OLD.tag;
+END^;
 
 DROP TRIGGER IF EXISTS release_add_requests;
 CREATE TRIGGER release_add_requests
@@ -75,8 +79,8 @@ CREATE TRIGGER release_add_requests
     FOR EACH ROW
 BEGIN
     DELETE FROM test_add_request
-    WHERE testId = OLD.testId AND questionId = OLD.questionId
-END;
+    WHERE testId = OLD.testId AND questionId = OLD.questionId;
+END^;
 
 DROP TRIGGER IF EXISTS disallow_owner_qtr;
 CREATE TRIGGER disallow_owner_qtr(

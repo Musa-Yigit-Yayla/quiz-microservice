@@ -34,11 +34,11 @@ public class QuizServiceService{
     }
 
     public void addQuestion(int userId, String password, String body, String answer0, String answer1, String answer2,
-                            String answer3, int answerIndex){
+                            String answer3, int answerIndex, String difficulty){
         //validate user password in service level and if matches add the question via repository's method
         String pw = this.userRepository.getPassword(userId);
         if(pw.equals(password)){
-            this.questionRepository.addQuestion(userId, body, answer0, answer1, answer2, answer3, answerIndex);
+            this.questionRepository.addQuestion(userId, body, answer0, answer1, answer2, answer3, answerIndex, difficulty);
         }
     }
     public void createTest(int userId, String password, String name, String tag){
@@ -64,11 +64,18 @@ public class QuizServiceService{
 
         String pw = this.userRepository.getPassword(userId);
         if(pw.equals(password) && this.questionRepository.ownsTest(userId, testName)){
-
-
+            result = this.questionRepository.getTestAddRequests(userId, testName);
         }
+        return result;
+    }
 
+    public List<QuestionDto> getSelfQuestions(int userId, String password) {
+        List<QuestionDto> result = null;
 
-
+        String pw = this.userRepository.getPassword(userId);
+        if(pw.equals(password)){
+            result = this.questionRepository.getSelfQuestions(userId);
+        }
+        return result;
     }
 }

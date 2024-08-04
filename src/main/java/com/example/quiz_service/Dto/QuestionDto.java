@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionDto{
+    private int id;
+    private int ownerId;
     private String questionBody;
     private List<String> options;
-    private String correctAnswer;
+    private int answerIndex;
     private String difficulty;
 }
