@@ -1,11 +1,13 @@
 package com.example.quiz_service.service;
 import com.example.quiz_service.Dto.QuestionDto;
+import com.example.quiz_service.Dto.TestAddRequestDto;
 import com.example.quiz_service.repository.QuestionRepository;
 import com.example.quiz_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import java.lang.Exception;
+import java.util.List;
 
 @Service
 public class QuizServiceService{
@@ -48,5 +50,25 @@ public class QuizServiceService{
 
     public String healthCheck() {
         return this.userRepository.healthCheck();
+    }
+
+    /**
+     *
+     * @param userId
+     * @param password
+     * @param testName
+     * @return the add requests registered for the test with owner id as userId, and given test name
+     */
+    public List<TestAddRequestDto> getTestAddRequests(int userId, String password, String testName) {
+        List<TestAddRequestDto> result = null;
+
+        String pw = this.userRepository.getPassword(userId);
+        if(pw.equals(password) && this.questionRepository.ownsTest(userId, testName)){
+
+
+        }
+
+
+
     }
 }

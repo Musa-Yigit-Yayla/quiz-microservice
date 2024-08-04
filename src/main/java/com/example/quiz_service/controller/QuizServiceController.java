@@ -1,9 +1,12 @@
 package com.example.quiz_service.controller;
 
 import com.example.quiz_service.Dto.QuestionDto;
+import com.example.quiz_service.Dto.QuestionTagRequestDto;
+import com.example.quiz_service.Dto.TestAddRequestDto;
 import com.example.quiz_service.service.QuizServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/quizservice")
@@ -55,9 +58,36 @@ class QuizServiceController{
     }
 
     @GetMapping("/getTestAddRequests/{userId}/{password}/{testName}")
-    public void getTestAddRequests(@PathVariable int userId, @PathVariable String password, @PathVariable String testName){
-        //ToDo
+    public List<TestAddRequestDto> getTestAddRequests(@PathVariable int userId, @PathVariable String password,
+                                                      @PathVariable String testName){
+        return this.quizService.getTestAddRequests(userId, password, testName);
     }
+
+    /**
+     *
+     * @param userId
+     * @param password
+     * @return the questions this user has created
+     */
+    @GetMapping("/getSelfQuestions/{userId}/{password}")
+    public List<QuestionDto> getSelfQuestions(@PathVariable int userId, @PathVariable String password){
+
+    }
+
+    /**
+     *
+     * @param userId
+     * @param password
+     * @param questionId a question which belongs to the given user
+     * @return tag requests added for this question
+     */
+    @GetMapping("/getQuestionTagRequests/{userId}/{password}/{questionId}")
+    public List<QuestionTagRequestDto> getQuestionTagRequests(@PathVariable int userId, @PathVariable String password,
+                                                              @PathVariable int questionId){
+
+    }
+
+    @PostMapping()
 
     @GetMapping("/testdb")
     public String testDatabaseConnection() {

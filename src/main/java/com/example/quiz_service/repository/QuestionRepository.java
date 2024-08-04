@@ -77,4 +77,16 @@ public class QuestionRepository{
         String query = "INSERT INTO question_tag_request(questionId, tag, requesterId) VALUES (?, ?, ?)";
         this.jdbcTemplate.update(query, questionId, tag, requesterId);
     }
+
+    /**
+     *
+     * @param userId
+     * @param testName
+     * @return true if given user has a test with the given name
+     */
+    public boolean ownsTest(int userId, String testName) {
+        String checkQuery = "SELECT * FROM test WHERE ownerId = ? AND name = ?;";
+        PreparedStatement ps = this.jdbcTemplate.
+
+    }
 }

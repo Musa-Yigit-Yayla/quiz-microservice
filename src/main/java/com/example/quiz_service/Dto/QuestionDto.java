@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class QuestionDto{
     private String questionBody;
-    List<String> options;
-    String correctAnswer;
-    String difficulty;
+    private List<String> options;
+    private String correctAnswer;
+    private String difficulty;
 }
