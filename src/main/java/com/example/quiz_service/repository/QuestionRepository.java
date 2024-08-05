@@ -137,6 +137,29 @@ public class QuestionRepository{
     /**
      *
      * @param userId
+     * @param questionId
+     * @return true if the given user owns the given question
+     */
+    public boolean ownsQuestion(int userId, int questionId){
+        boolean result = false;
+        String query = "SELECT * FROM question WHERE ownerId = ? AND questionId = ?;";
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            
+            ps.setInt(1, userId);
+            ps.setInt(2, questionId);
+            ResultSet rs = ps.executeQuery();
+            result = rs.next();
+            
+            return result;
+        }
+        catch(Exception e){ System.out.println(e.getMessage()); return result;}
+    }
+
+    /**
+     *
+     * @param userId
      * @param testName
      * @return the test add requests for the given test with testname and owner id as user id
      */
@@ -250,6 +273,50 @@ public class QuestionRepository{
             ps.setInt(6, answerIndex);
             ps.setString(7, difficulty);
             ps.setInt(8, questionId);
+
+            ps.executeUpdate();
+        }
+        catch(Exception e){ System.out.println(e.getMessage());}
+    }
+
+    public void deleteQuestion(int questionId) {
+        String query = "DELETE FROM question WHERE id = ?;";
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setInt(1, questionId);
+            ps.executeUpdate();
+        }
+        catch(Exception e){ System.out.println(e.getMessage());}
+    }
+
+    public void updateTest(int userId, String currName, String newName, String tag) {
+        String query = "UPDATE test SET name = ?, tag = ? WHERE ownerId = ? AND name = ?;";
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setString(1, newName);
+            ps.setString(2, tag);
+            ps.setInt(3, userId);
+            ps.setString(4, currName);
+
+            ps.executeUpdate();
+        }
+        catch(Exception e){ System.out.println(e.getMessage());}
+    }
+
+    /**
+     *
+     * @param userId ownerId
+     * @param name testName
+     * deletes the test if the given user owns a test with the given name
+     */
+    public void deleteTest(int userId, String name) {
+        String query = "DELETE FROM test WHERE ownerId = ? AND name = ?;";
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setInt(1, userId);
+            ps.setString(2, name);
 
             ps.executeUpdate();
         }

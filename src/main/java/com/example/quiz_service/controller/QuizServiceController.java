@@ -95,6 +95,48 @@ class QuizServiceController{
         this.quizService.updateQuestion(userId, password, questionId, body, answer0, answer1, answer2, answer3, answerIndex, difficulty);
     }
 
+    @DeleteMapping("/deleteQuestion/{userId}/{password}/{questionId}")
+    public void deleteQuestion(@PathVariable int userId, @PathVariable String password, @PathVariable int questionId){
+        this.quizService.deleteQuestion(userId, password, questionId);
+    }
+
+    @PutMapping("/updateTest/{userId}/{password}/{currName}/{newName}/{tag}")
+    public void updateTest(@PathVariable int userId, @PathVariable String password, @PathVariable String currName,
+                           @PathVariable String newName, @PathVariable String tag){
+        this.quizService.updateTest(userId, password, currName, newName, tag);
+    }
+    @DeleteMapping("/deleteTest/{userId}/{password}/{name}")
+    public void deleteTest(@PathVariable int userId, @PathVariable String password, @PathVariable String name){
+        this.quizService.deleteTest(userId, password, name);
+    }
+
+    @PostMapping("/questionRequestTag/{userId}/{password}/{questionId}/{tag}")
+    public void questionRequestTag(@PathVariable int userId, @PathVariable String password, @PathVariable int questionId,
+                                   @PathVariable String tag){
+        //ToDo
+    }
+
+    @PostMapping("/testRequestAddQuestion/{userId}/{password}/{testId}/{questionId}/{tag}")
+    public void testRequestAddQuestion(@PathVariable int userId, @PathVariable String password, @PathVariable int testId,
+                                       @PathVariable int questionId, @PathVariable String tag){
+        //ToDo
+    }
+
+    @DeleteMapping("/evaluateQuestionTagReq/{userId}/{password}/{questionId}/{tag}/{requesterId}/{approve}")
+    public void evaluateQuestionTagReq(@PathVariable int userId, @PathVariable String password, @PathVariable int questionId,
+                                       @PathVariable String tag, @PathVariable int requesterId, @PathVariable long approve){
+        //If approve is true, will add the tag to the question, else will only delete the request
+        //ToDo
+    }
+
+    @DeleteMapping("/evaluateTestAddReq/{userId}/{password}/{testId}/{questionId}")
+    public void evaluateTestAddReq(@PathVariable int userId, @PathVariable String password, @PathVariable int testId,
+                                   @PathVariable int questionId){
+        //YOU MAY WANT TO REMOVE THE TRIGGER WHICH RELEASES OTHER ADD REQUESTS TOO, AND DELETE ALL REQUEST AT ONCE IN
+        //REPOSITORY LEVEL
+        //ToDo
+    }
+
     @GetMapping("/testdb")
     public String testDatabaseConnection() {
         try {

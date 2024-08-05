@@ -94,8 +94,47 @@ public class QuizServiceService{
                                String answer2, String answer3, int answerIndex, String difficulty) {
         String pw = this.userRepository.getPassword(userId);
 
-        if(pw.equals(password)){
+        if(pw.equals(password) && this.questionRepository.ownsQuestion(userId, questionId)){
             this.questionRepository.updateQuestion(questionId, body, answer0, answer1, answer2, answer3, answerIndex, difficulty);
+        }
+    }
+
+    public void deleteQuestion(int userId, String password, int questionId) {
+        String pw = this.userRepository.getPassword(userId);
+
+        if(pw.equals(password) && this.questionRepository.ownsQuestion(userId, questionId)){
+            this.questionRepository.deleteQuestion(questionId);
+        }
+
+    }
+
+    /**
+     *
+     * @param userId
+     * @param password
+     * @param currName is current testName
+     * @param newName is new testName
+     * @param tag
+     */
+    public void updateTest(int userId, String password, String currName, String newName, String tag) {
+        String pw = this.userRepository.getPassword(userId);
+
+        if(pw.equals(password) && this.questionRepository.ownsTest(userId, currName)){
+            this.questionRepository.updateTest(userId, currName, newName, tag);
+        }
+    }
+
+    /**
+     *
+     * @param userId
+     * @param password
+     * @param name
+     */
+    public void deleteTest(int userId, String password, String name){
+        String pw = this.userRepository.getPassword(userId);
+
+        if(pw.equals(password) && this.questionRepository.ownsTest(userId, name)){
+            this.questionRepository.deleteTest(userId, name);
         }
     }
 }

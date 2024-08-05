@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS question (
 CREATE TABLE IF NOT EXISTS test (
                                     id INT PRIMARY KEY AUTO_INCREMENT,
                                     ownerId INT,
-                                    name TEXT NOT NULL,
+                                    name VARCHAR(20) NOT NULL,
                                     tag VARCHAR(30) NOT NULL,
                                     UNIQUE(ownerId, name),
                                     FOREIGN KEY (ownerId) REFERENCES user(id)
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS question_tag_request(
 
 delimiter ^;
 
-DROP TRIGGER IF EXISTS release_tag_requests;
+DROP TRIGGER IF EXISTS release_tag_requests^;
 CREATE TRIGGER release_tag_requests
     BEFORE DELETE ON question_tag_request
     FOR EACH ROW
@@ -73,13 +73,43 @@ BEGIN
     WHERE questionId = OLD.questionId AND tag = OLD.tag;
 END^;
 
-DROP TRIGGER IF EXISTS release_add_requests;
+DROP TRIGGER IF EXISTS release_add_requests^;
 CREATE TRIGGER release_add_requests
     BEFORE DELETE ON test_add_request
     FOR EACH ROW
 BEGIN
     DELETE FROM test_add_request
     WHERE testId = OLD.testId AND questionId = OLD.questionId;
+END^;
+
+DROP TRIGGER IF EXISTS del_question_trigger^;
+CREATE TRIGGER del_question_trigger
+    BEFORE DELETE ON question
+    FOR EACH ROW
+BEGIN
+    DELETE FROM test_questions
+    WHERE questionId = OLD.id;
+
+    DELETE FROM question_tags
+    WHERE questionId = OLD.id;
+
+    DELETE FROM test_add_request
+    WHERE questionId = OLD.id;
+
+    DELETE FROM question_tag_request
+    WHERE questionId = OLD.id;
+END^;
+
+DROP TRIGGER IF EXISTS del_test_trigger^;
+CREATE TRIGGER del_test_trigger
+    BEFORE DELETE ON test
+    FOR EACH ROW
+BEGIN
+    DELETE FROM test_questions
+    WHERE testId = OLD.id;
+
+    DELETE FROM test_add_request
+    WHERE testId = OLD.id;
 END^;
 
 CREATE OR REPLACE VIEW difficulty_distributions AS (
