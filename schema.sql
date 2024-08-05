@@ -66,20 +66,20 @@ delimiter ^;
 
 DROP TRIGGER IF EXISTS release_tag_requests^;
 CREATE TRIGGER release_tag_requests
-    BEFORE DELETE ON question_tag_request
+    BEFORE INSERT ON question_tags
     FOR EACH ROW
 BEGIN
     DELETE FROM question_tag_request
-    WHERE questionId = OLD.questionId AND tag = OLD.tag;
+    WHERE questionId = NEW.questionId AND tag = NEW.tag;
 END^;
 
 DROP TRIGGER IF EXISTS release_add_requests^;
 CREATE TRIGGER release_add_requests
-    BEFORE DELETE ON test_add_request
+    BEFORE INSERT ON test_questions
     FOR EACH ROW
 BEGIN
     DELETE FROM test_add_request
-    WHERE testId = OLD.testId AND questionId = OLD.questionId;
+    WHERE testId = NEW.testId AND questionId = NEW.questionId;
 END^;
 
 DROP TRIGGER IF EXISTS del_question_trigger^;
@@ -125,7 +125,7 @@ CREATE OR REPLACE VIEW question_tag_distributions AS (
 )^;
 
 CREATE OR REPLACE VIEW test_tag_distributions AS (
-    SELECT COUNT(id) AS question_count, tag
+    SELECT COUNT(id) AS test_count, tag
     FROM test
     GROUP BY tag
 )^;

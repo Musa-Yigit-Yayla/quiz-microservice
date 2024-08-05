@@ -1,8 +1,6 @@
 package com.example.quiz_service.controller;
 
-import com.example.quiz_service.Dto.QuestionDto;
-import com.example.quiz_service.Dto.QuestionTagRequestDto;
-import com.example.quiz_service.Dto.TestAddRequestDto;
+import com.example.quiz_service.Dto.*;
 import com.example.quiz_service.service.QuizServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -110,12 +108,29 @@ class QuizServiceController{
         this.quizService.deleteTest(userId, password, name);
     }
 
+    /**
+     *
+     * @param userId
+     * @param password
+     * @param questionId
+     * @param tag
+     * if the user owns this question, directly adds the tag. Otherwise inserts a request regarding adding the tag.
+     */
     @PostMapping("/questionRequestTag/{userId}/{password}/{questionId}/{tag}")
     public void questionRequestTag(@PathVariable int userId, @PathVariable String password, @PathVariable int questionId,
                                    @PathVariable String tag){
-        //ToDo
+        this.quizService.questionRequestTag(userId, password, questionId, tag);
     }
 
+    /**
+     *
+     * @param userId
+     * @param password
+     * @param testId
+     * @param questionId
+     * @param tag
+     * Similarly if the user owns this test, directly adds the tag. Otherwise inserts a request regarding adding the tag.
+     */
     @PostMapping("/testRequestAddQuestion/{userId}/{password}/{testId}/{questionId}/{tag}")
     public void testRequestAddQuestion(@PathVariable int userId, @PathVariable String password, @PathVariable int testId,
                                        @PathVariable int questionId, @PathVariable String tag){

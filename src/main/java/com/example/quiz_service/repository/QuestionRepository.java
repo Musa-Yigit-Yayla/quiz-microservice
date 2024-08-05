@@ -1,7 +1,5 @@
 package com.example.quiz_service.repository;
-import com.example.quiz_service.Dto.QuestionDto;
-import com.example.quiz_service.Dto.QuestionTagRequestDto;
-import com.example.quiz_service.Dto.TestAddRequestDto;
+import com.example.quiz_service.Dto.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -323,10 +321,72 @@ public class QuestionRepository{
         catch(Exception e){ System.out.println(e.getMessage());}
     }
 
-    public String getDifficultyDistributions() {
+    public List<DifficultyDistributionDto> getDifficultyDistributions() {
         String query = "SELECT * FROM difficulty_distributions;";
+
+        List<DifficultyDistributionDto> result = null;
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            result = new ArrayList<>();
+
+            while(rs.next()){
+                DifficultyDistributionDto dto = new DifficultyDistributionDto();
+
+                dto.setQuestionCount(rs.getInt("question_count"));
+                dto.setDifficulty(rs.getString("difficulty"));
+                result.add(dto);
+            }
+            return result;
+        }
+        catch(Exception e){ System.out.println(e.getMessage()); return result;}
     }
 
-    public String getQuestionTagDistributions() {
+    public List<QuestionTagDistributionDto> getQuestionTagDistributions() {
+        String query = "SELECT * FROM question_tag_distributions;";
+
+        List<QuestionTagDistributionDto> result = null;
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            result = new ArrayList<>();
+
+            while(rs.next()){
+                QuestionTagDistributionDto dto = new QuestionTagDistributionDto();
+                dto.setQuestionCount(rs.getInt("question_count"));
+                dto.setTag(rs.getString("tag"));
+
+                result.add(dto);
+            }
+        }
+        catch(Exception e){ System.out.println(e.getMessage());}
+        finally{
+            return result;
+        }
+    }
+
+    public List<TestTagDistributionDto> getTestTagDistributions() {
+        String query = "SELECT * FROM test_tag_distributions;";
+        List<TestTagDistributionDto> result = null;
+
+        try{
+            ResultSet rs = this.connection.prepareStatement(query).executeQuery();
+            result = new ArrayList<>();
+
+            while(rs.next()){
+                TestTagDistributionDto dto = new TestTagDistributionDto();
+                dto.setTestCount(rs.getInt("test_count"));
+                dto.setTag(rs.getString("tag"));
+
+                result.add(dto);
+            }
+        }
+        catch(Exception e){ System.out.println(e.getMessage());}
+        finally{
+            return result;
+        }
     }
 }

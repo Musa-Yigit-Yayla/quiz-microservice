@@ -1,7 +1,5 @@
 package com.example.quiz_service.service;
-import com.example.quiz_service.Dto.QuestionDto;
-import com.example.quiz_service.Dto.QuestionTagRequestDto;
-import com.example.quiz_service.Dto.TestAddRequestDto;
+import com.example.quiz_service.Dto.*;
 import com.example.quiz_service.repository.QuestionRepository;
 import com.example.quiz_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,11 +136,30 @@ public class QuizServiceService{
         }
     }
 
-    public String getDifficultyDistributions() {
+    public List<DifficultyDistributionDto> getDifficultyDistributions() {
         return this.questionRepository.getDifficultyDistributions();
     }
 
-    public String getQuestionTagDistributions() {
+    public List<QuestionTagDistributionDto> getQuestionTagDistributions() {
         return this.questionRepository.getQuestionTagDistributions();
+    }
+
+    public List<TestTagDistributionDto> getTestTagDistributions() {
+        return this.questionRepository.getTestTagDistributions();
+    }
+
+    public void questionRequestTag(int userId, String password, int questionId, String tag) {
+        String pw = this.userRepository.getPassword(userId);
+
+        if(pw.equals(password)){
+
+            //check whether if the user owns the question
+            if(this.questionRepository.ownsQuestion(userId, questionId)){
+
+            }
+            else{
+
+            }
+        }
     }
 }
