@@ -126,6 +126,7 @@ class QuizServiceController{
     public void evaluateQuestionTagReq(@PathVariable int userId, @PathVariable String password, @PathVariable int questionId,
                                        @PathVariable String tag, @PathVariable int requesterId, @PathVariable long approve){
         //If approve is true, will add the tag to the question, else will only delete the request
+        //REMOVE THE TRIGGER WHICH RELEASES OTHER TAG REQUESTS TOO, TO AVOID CYCLIC TRIGGER EXECUTION
         //ToDo
     }
 
@@ -135,6 +136,20 @@ class QuizServiceController{
         //YOU MAY WANT TO REMOVE THE TRIGGER WHICH RELEASES OTHER ADD REQUESTS TOO, AND DELETE ALL REQUEST AT ONCE IN
         //REPOSITORY LEVEL
         //ToDo
+    }
+
+    @GetMapping("/getDifficultyDistributions")
+    public List<DifficultyDistributionDto> getDifficultyDistributions(){
+        return this.quizService.getDifficultyDistributions();
+    }
+
+    @GetMapping("/getQuestionTagDistributions")
+    public List<QuestionTagDistributionDto> getQuestionTagDistributions(){
+        return this.quizService.getQuestionTagDistributions();
+    }
+    @GetMapping("/getTestTagDistributions")
+    public List<TestTagDistributionDto> getTestTagDistributions(){
+        return this.quizService.getTestTagDistributions();
     }
 
     @GetMapping("/testdb")

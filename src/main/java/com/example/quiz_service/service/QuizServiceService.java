@@ -137,4 +137,12 @@ public class QuizServiceService{
             this.questionRepository.deleteTest(userId, name);
         }
     }
+
+    public String getDifficultyDistributions() {
+        return this.questionRepository.getDifficultyDistributions();
+    }
+
+    public String getQuestionTagDistributions() {
+        return this.questionRepository.getQuestionTagDistributions();
+    }
 }

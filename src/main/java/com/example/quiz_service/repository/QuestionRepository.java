@@ -322,4 +322,11 @@ public class QuestionRepository{
         }
         catch(Exception e){ System.out.println(e.getMessage());}
     }
+
+    public String getDifficultyDistributions() {
+        String query = "SELECT * FROM difficulty_distributions;";
+    }
+
+    public String getQuestionTagDistributions() {
+    }
 }

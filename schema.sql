@@ -118,6 +118,18 @@ CREATE OR REPLACE VIEW difficulty_distributions AS (
     GROUP BY difficulty
 )^;
 
+CREATE OR REPLACE VIEW question_tag_distributions AS (
+       SELECT COUNT(id) AS question_count, tag
+       FROM question JOIN question_tags ON (question.id = question_tags.questionId)
+       GROUP BY tag
+)^;
+
+CREATE OR REPLACE VIEW test_tag_distributions AS (
+    SELECT COUNT(id) AS question_count, tag
+    FROM test
+    GROUP BY tag
+)^;
+
 DROP TRIGGER IF EXISTS disallow_owner_qtr;
 CREATE TRIGGER disallow_owner_qtr(
     BEFORE INSERT ON question_tag_request
