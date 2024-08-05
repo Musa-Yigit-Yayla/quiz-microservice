@@ -84,10 +84,16 @@ class QuizServiceController{
     @GetMapping("/getQuestionTagRequests/{userId}/{password}/{questionId}")
     public List<QuestionTagRequestDto> getQuestionTagRequests(@PathVariable int userId, @PathVariable String password,
                                                               @PathVariable int questionId){
-
+        return this.quizService.getQuestionTagRequests(userId, password, questionId);
     }
 
-    @PostMapping()
+    @PutMapping("/updateQuestion/{userId}/{password}/{questionId}/{body}/{answer0}/{answer1}/{answer2}/{answer3}/{answerIndex}/{difficulty}")
+    public void updateQuestion(@PathVariable int userId, @PathVariable String password, @PathVariable int questionId,
+                               @PathVariable String body, @PathVariable String answer0,
+                               @PathVariable String answer1, @PathVariable String answer2, @PathVariable String answer3,
+                               @PathVariable int answerIndex, @PathVariable String difficulty){
+        this.quizService.updateQuestion(userId, password, questionId, body, answer0, answer1, answer2, answer3, answerIndex, difficulty);
+    }
 
     @GetMapping("/testdb")
     public String testDatabaseConnection() {

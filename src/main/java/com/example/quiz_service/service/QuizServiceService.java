@@ -1,5 +1,6 @@
 package com.example.quiz_service.service;
 import com.example.quiz_service.Dto.QuestionDto;
+import com.example.quiz_service.Dto.QuestionTagRequestDto;
 import com.example.quiz_service.Dto.TestAddRequestDto;
 import com.example.quiz_service.repository.QuestionRepository;
 import com.example.quiz_service.repository.UserRepository;
@@ -77,5 +78,24 @@ public class QuizServiceService{
             result = this.questionRepository.getSelfQuestions(userId);
         }
         return result;
+    }
+
+    public List<QuestionTagRequestDto> getQuestionTagRequests(int userId, String password, int questionId){
+        List<QuestionTagRequestDto> result = null;
+
+        String pw = this.userRepository.getPassword(userId);
+        if(pw.equals(password)){
+            result = this.questionRepository.getQuestionTagRequests(userId, questionId);
+        }
+        return result;
+    }
+
+    public void updateQuestion(int userId, String password, int questionId, String body, String answer0, String answer1,
+                               String answer2, String answer3, int answerIndex, String difficulty) {
+        String pw = this.userRepository.getPassword(userId);
+
+        if(pw.equals(password)){
+            this.questionRepository.updateQuestion(questionId, body, answer0, answer1, answer2, answer3, answerIndex, difficulty);
+        }
     }
 }

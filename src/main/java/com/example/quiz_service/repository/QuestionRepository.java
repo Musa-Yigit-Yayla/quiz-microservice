@@ -1,5 +1,6 @@
 package com.example.quiz_service.repository;
 import com.example.quiz_service.Dto.QuestionDto;
+import com.example.quiz_service.Dto.QuestionTagRequestDto;
 import com.example.quiz_service.Dto.TestAddRequestDto;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -207,5 +208,51 @@ public class QuestionRepository{
         }
         catch(Exception e){ System.out.println(e.getMessage()); return result;}
 
+    }
+
+    public List<QuestionTagRequestDto> getQuestionTagRequests(int questionOwnerId, int questionId) {
+        List<QuestionTagRequestDto> result = null;
+
+        String query = "SELECT * FROM question_tag_request WHERE questionId = ?;";
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setInt(1, questionId);
+            ResultSet rs = ps.executeQuery();
+
+            result = new ArrayList<>();
+            while(rs.next()){
+                QuestionTagRequestDto qtrDto = new QuestionTagRequestDto();
+                qtrDto.setQuestionOwnerId(questionOwnerId);
+                qtrDto.setQuestionId(rs.getInt("questionId"));
+                qtrDto.setRequesterId(rs.getInt("requesterId"));
+                qtrDto.setTag(rs.getString("tag"));
+
+                result.add(qtrDto);
+            }
+            return result;
+        }
+        catch(Exception e){ System.out.println(e.getMessage()); return result;}
+    }
+
+    public void updateQuestion(int questionId, String body, String answer0, String answer1, String answer2,
+                               String answer3, int answerIndex, String difficulty) {
+        String query = "UPDATE question SET body = ?, answer0 = ?, answer1 = ?, answer2 = ?, answer3 = ?, " +
+                "answer_index = ?, difficulty = ? WHERE questionId = ?;";
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setString(1, body);
+            ps.setString(2, answer0);
+            ps.setString(3, answer1);
+            ps.setString(4, answer2);
+            ps.setString(5, answer3);
+            ps.setInt(6, answerIndex);
+            ps.setString(7, difficulty);
+            ps.setInt(8, questionId);
+
+            ps.executeUpdate();
+        }
+        catch(Exception e){ System.out.println(e.getMessage());}
     }
 }

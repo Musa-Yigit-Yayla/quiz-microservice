@@ -82,6 +82,12 @@ BEGIN
     WHERE testId = OLD.testId AND questionId = OLD.questionId;
 END^;
 
+CREATE OR REPLACE VIEW difficulty_distributions AS (
+    SELECT COUNT(id) AS question_count, difficulty
+    FROM question
+    GROUP BY difficulty
+)^;
+
 DROP TRIGGER IF EXISTS disallow_owner_qtr;
 CREATE TRIGGER disallow_owner_qtr(
     BEFORE INSERT ON question_tag_request
