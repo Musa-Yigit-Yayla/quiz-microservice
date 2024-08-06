@@ -68,7 +68,7 @@ public class QuestionRepository{
     public int getTestOwnerId(int testId){
         int result = -1;
 
-        String query = "SELECT ownerId FROM question WHERE testId = ?;";
+        String query = "SELECT ownerId FROM test WHERE id = ?;";
 
         try {
             PreparedStatement ps = this.connection.prepareStatement(query);
@@ -419,6 +419,30 @@ public class QuestionRepository{
 
                 result.add(dto);
             }
+        }
+        catch(Exception e){ System.out.println(e.getMessage());}
+        finally{
+            return result;
+        }
+    }
+
+    public QuestionTagsDto getQuestionTags(int questionId) {
+        String query = "SELECT tag FROM question_tags WHERE questionId = ?;";
+        QuestionTagsDto result = null;
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setInt(1, questionId);
+
+            ResultSet rs = ps.executeQuery();
+            result = new QuestionTagsDto();
+            result.setQuestionId(questionId);
+            List<String> tagList = new ArrayList<>();
+
+            while(rs.next()){
+                tagList.add(rs.getString("tag"));
+            }
+            result.setTags(tagList);
         }
         catch(Exception e){ System.out.println(e.getMessage());}
         finally{

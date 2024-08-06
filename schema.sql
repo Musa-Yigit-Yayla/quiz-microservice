@@ -26,22 +26,22 @@ CREATE TABLE IF NOT EXISTS test (
                                     tag VARCHAR(30) NOT NULL,
                                     UNIQUE(ownerId, name),
                                     FOREIGN KEY (ownerId) REFERENCES user(id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS test_questions (
                                               testId INT,
                                               questionId INT,
                                               PRIMARY KEY (testId, questionId),
     FOREIGN KEY (testId) REFERENCES test(id),
-    FOREIGN KEY (questionId) REFERENCES user(id)
-    );
+    FOREIGN KEY (questionId) REFERENCES question(id)
+);
 
 CREATE TABLE IF NOT EXISTS question_tags (
                                              questionId INT,
                                              tag VARCHAR(30),
                                              PRIMARY KEY (questionId, tag),
     FOREIGN KEY(questionId) REFERENCES question(id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS test_add_request(
                                                testId INT,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS test_add_request(
     FOREIGN KEY (testId) REFERENCES test(id),
     FOREIGN KEY (questionId) REFERENCES question(id),
     FOREIGN KEY (requesterId) REFERENCES user(id)
-    );
+);
 CREATE TABLE IF NOT EXISTS question_tag_request(
                                                    questionId INT,
                                                    tag VARCHAR(30),

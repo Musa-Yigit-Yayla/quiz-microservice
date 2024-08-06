@@ -212,4 +212,13 @@ public class QuizServiceService{
             }
         }
     }
+
+    /**
+     *
+     * @param questionId
+     * @return the tags given question has
+     */
+    public QuestionTagsDto getQuestionTags(int questionId) {
+        return this.questionRepository.getQuestionTags(questionId);
+    }
 }

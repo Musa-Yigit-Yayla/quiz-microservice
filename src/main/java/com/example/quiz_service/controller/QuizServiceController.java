@@ -84,6 +84,16 @@ class QuizServiceController{
         return this.quizService.getQuestionTagRequests(userId, password, questionId);
     }
 
+    /**
+     *
+     * @param questionId
+     * @returns the test questions
+     */
+    @GetMapping("/getQuestionTags/{questionId}")
+    public QuestionTagsDto getQuestionTags(@PathVariable int questionId){
+        return this.quizService.getQuestionTags(questionId);
+    }
+
     @PutMapping("/updateQuestion/{userId}/{password}/{questionId}/{body}/{answer0}/{answer1}/{answer2}/{answer3}/{answerIndex}/{difficulty}")
     public void updateQuestion(@PathVariable int userId, @PathVariable String password, @PathVariable int questionId,
                                @PathVariable String body, @PathVariable String answer0,

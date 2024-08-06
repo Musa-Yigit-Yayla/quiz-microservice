@@ -21,8 +21,8 @@ http://localhost:8082/quizservice/addQuestion/3/CnN1kboZ/What process do plants 
 http://localhost:8082/quizservice/addQuestion/3/CnN1kboZ/What is the chemical symbol for Gold/Au/Ag/Fe/Pb/0/medium
 http://localhost:8082/quizservice/addQuestion/3/CnN1kboZ/What is the pH of pure water at 25°C/7/6/8/5/0/easy
 http://localhost:8082/quizservice/addQuestion/3/CnN1kboZ/What is a synonym for "benevolent"/Malevolent/Kind/Apathetic/Hostile/1/extreme
-http://localhost:8082/quizservice/addQuestion/4/What is an antonym for "elated"/Joyful/Despondent/Excited/Cheerful/1/hard
-http://localhost:8082/quizservice/addQuestion/4/What does the word "meticulous" mean?/Careless/Detailed and precise/Impulsive/General/1/easy
+http://localhost:8082/quizservice/addQuestion/4/mhmi0C22/What is an antonym for "elated"/Joyful/Despondent/Excited/Cheerful/1/hard
+http://localhost:8082/quizservice/addQuestion/4/mhmi0C22/What does the word "meticulous" mean?/Careless/Detailed and precise/Impulsive/General/1/easy
 http://localhost:8082/quizservice/addQuestion/4/mhmi0C22/In which sentence is the word "elusive" used correctly/The answer was elusive, just like I thought./The elusive weather was perfect for the event./She felt an elusive joy after winning the award./The elusive cat was a great pet./0/medium
 http://localhost:8082/quizservice/addQuestion/4/mhmi0C22/Which sentence has correct subject-verb agreement/The dogs runs quickly./She enjoy reading books./He plays the guitar./The children is playing outside./2/easy
 http://localhost:8082/quizservice/addQuestion/5/fCi9CQ6b/Which sentence uses commas correctly/My brother, who lives in New York, is visiting us next week./I will be there, on time, and ready./She bought apples, oranges, and bananas./We went to the store and bought, bread, milk, and eggs./0/easy
@@ -37,3 +37,33 @@ http://localhost:8082/quizservice/createTest/6/gNnLnOrh/phyiscs hard test/physic
 http://localhost:8082/quizservice/createTest/4/mhmi0C22/vocabulary/english
 http://localhost:8082/quizservice/createTest/5/fCi9CQ6b/grammar/english
 http://localhost:8082/quizservice/createTest/5/fCi9CQ6b/grammar/english //send again to verify that duplicate test with the same ownerId is disallowed
+
+http://localhost:8082/quizservice/getSelfQuestions/5/fCi9CQ6b
+
+
+http://localhost:8082/quizservice/questionRequestTag/5/fCi9CQ6b/23/grammar //add the tag directly since this user owns the given question
+http://localhost:8082/quizservice/questionRequestTag/5/fCi9CQ6b/23/grammar //check for duplicate tag adding
+http://localhost:8082/quizservice/questionRequestTag/5/fCi9CQ6b/17/vocabulary 
+http://localhost:8082/quizservice/questionRequestTag/5/fCi9CQ6b/17/vocabulary
+
+http://localhost:8082/quizservice/getQuestionTagRequests/4/mhmi0C22/17
+
+http://localhost:8082/quizservice/evaluateQuestionTagReq/4/mhmi0C22/17/vocabulary /true
+http://localhost:8082/quizservice/getQuestionTags/17
+
+http://localhost:8082/quizservice/testRequestAddQuestion/6/gNnLnOrh/1/26 //owner of the test adds directly
+http://localhost:8082/quizservice/testRequestAddQuestion/6/gNnLnOrh/1/26 //duplicate testing
+http://localhost:8082/quizservice/testRequestAddQuestion/7/EujJDLhb/1/8 
+http://localhost:8082/quizservice/testRequestAddQuestion/7/EujJDLhb/1/8 //duplicate testing
+http://localhost:8082/quizservice/testRequestAddQuestion/1/qnkw8LXU/1/8
+http://localhost:8082/quizservice/testRequestAddQuestion/5/fCi9CQ6b/1/8
+http://localhost:8082/quizservice/testRequestAddQuestion/4/mhmi0C22/2/8
+http://localhost:8082/quizservice/testRequestAddQuestion/3/CnN1kboZ/2/15
+http://localhost:8082/quizservice/testRequestAddQuestion/3/CnN1kboZ/2/15 //duplicate testing
+http://localhost:8082/quizservice/testRequestAddQuestion/6/gNnLnOrh/2/15
+
+http://localhost:8082/quizservice/evaluateTestAddReq/1/qnkw8LXU/1/8/true //unauthorized user approve attempt
+
+
+
+
