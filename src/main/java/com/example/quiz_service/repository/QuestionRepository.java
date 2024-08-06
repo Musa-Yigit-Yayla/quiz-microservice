@@ -56,7 +56,7 @@ public class QuestionRepository{
      * attempts and adds the given tag to the given question, if that tag is not already present for that question
      */
     public void addQuestionTag(int questionId, String tag){
-        String query = "INSERT INTO question_tags(questionId, tag) VALUES (?, ? ,?);";
+        String query = "INSERT INTO question_tags(questionId, tag) VALUES (?, ?);";
         this.jdbcTemplate.update(query, questionId, tag);
     }
 
@@ -175,7 +175,7 @@ public class QuestionRepository{
      */
     public boolean ownsQuestion(int userId, int questionId){
         boolean result = false;
-        String query = "SELECT * FROM question WHERE ownerId = ? AND questionId = ?;";
+        String query = "SELECT * FROM question WHERE ownerId = ? AND id = ?;";
 
         try{
             PreparedStatement ps = this.connection.prepareStatement(query);
@@ -244,6 +244,7 @@ public class QuestionRepository{
 
             ResultSet rs = ps.executeQuery();
 
+            result = new ArrayList<>();
             while(rs.next()){
                 QuestionDto qDto = new QuestionDto();
                 qDto.setId(rs.getInt("id"));

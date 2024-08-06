@@ -8,5 +8,32 @@ http://localhost:8082/quizservice/createUser
 http://localhost:8082/quizservice/createUser
 http://localhost:8082/quizservice/createUser
 
-//question generation (adjust user id and password tokens accordingly)
-http://localhost:8082/quizservice/addQuestion/1/qLoZhOpI/What is 5 + 7?/10/11/12/13/2/easy
+//question generation (adjust user id and password tokens accordingly) IMPORTANT: question body must not contain '?'
+http://localhost:8082/quizservice/addQuestion/1/qnkw8LXU/What is 5 + 7/10/11/12/13/2/easy
+http://localhost:8082/quizservice/addQuestion/1/qnkw8LXU/What is 8 - 3/5/6/4/7/0/easy
+http://localhost:8082/quizservice/addQuestion/1/qnkw8LXU/What is 12 ÷ 4/2/3/4/5/2/easy
+http://localhost:8082/quizservice/addQuestion/2/XW3kqGQL/What is 9 × 3/27/18/36/9/0/easy
+http://localhost:8082/quizservice/addQuestion/7/EujJDLhb/What is 9 × 3/27/18/36/9/0/easy
+http://localhost:8082/quizservice/addQuestion/7/EujJDLhb/What is 15 - 6/9/8/7/10/0/easy
+http://localhost:8082/quizservice/addQuestion/7/What is the unit of force in the International System of Units (SI)?/Newton/Pascal/Joule/Watt/0/easy
+http://localhost:8082/quizservice/addQuestion/7/What is the powerhouse of the cell/Mitochondria/Nucleus/Ribosome/Golgi apparatus/0/hard
+http://localhost:8082/quizservice/addQuestion/3/CnN1kboZ/What process do plants use to convert sunlight into energy/Photosynthesis/Respiration/Fermentation/Digestion/0/medium
+http://localhost:8082/quizservice/addQuestion/3/CnN1kboZ/What is the chemical symbol for Gold/Au/Ag/Fe/Pb/0/medium
+http://localhost:8082/quizservice/addQuestion/3/CnN1kboZ/What is the pH of pure water at 25°C/7/6/8/5/0/easy
+http://localhost:8082/quizservice/addQuestion/3/CnN1kboZ/What is a synonym for "benevolent"/Malevolent/Kind/Apathetic/Hostile/1/extreme
+http://localhost:8082/quizservice/addQuestion/4/What is an antonym for "elated"/Joyful/Despondent/Excited/Cheerful/1/hard
+http://localhost:8082/quizservice/addQuestion/4/What does the word "meticulous" mean?/Careless/Detailed and precise/Impulsive/General/1/easy
+http://localhost:8082/quizservice/addQuestion/4/mhmi0C22/In which sentence is the word "elusive" used correctly/The answer was elusive, just like I thought./The elusive weather was perfect for the event./She felt an elusive joy after winning the award./The elusive cat was a great pet./0/medium
+http://localhost:8082/quizservice/addQuestion/4/mhmi0C22/Which sentence has correct subject-verb agreement/The dogs runs quickly./She enjoy reading books./He plays the guitar./The children is playing outside./2/easy
+http://localhost:8082/quizservice/addQuestion/5/fCi9CQ6b/Which sentence uses commas correctly/My brother, who lives in New York, is visiting us next week./I will be there, on time, and ready./She bought apples, oranges, and bananas./We went to the store and bought, bread, milk, and eggs./0/easy
+http://localhost:8082/quizservice/addQuestion/5/fCi9CQ6b/Which sentence correctly matches the pronoun with its antecedent/Everyone should bring their book to class./The team won their game./The company announced its new policy./Neither of the students brought their notebook./2/hard
+http://localhost:8082/quizservice/addQuestion/5/fCi9CQ6b/Which sentence maintains consistent tense throughout/She was going to the store and buys groceries./He writes a letter and mailed it yesterday./They had finished their homework before they went to the park./I am studying while I was listening to music./2/easy
+http://localhost:8082/quizservice/addQuestion/5/fCi9CQ6b/Which sentence correctly uses the modifier/Running down the street, the car was seen by me./The excited child, played in the park all day./The teacher, explaining the lesson, was interrupted frequently./She found a letter in the drawer, which was old./2/medium
+http://localhost:8082/quizservice/addQuestion/6/gNnLnOrh/What is the principle of conservation of angular momentum/Angular momentum remains constant/Angular momentum is conserved only in closed systems/Angular momentum depends on the force applied/Angular momentum is always zero/0/medium
+http://localhost:8082/quizservice/addQuestion/6/gNnLnOrh/What is the Higgs boson responsible for in the Standard Model of particle physics/Giving mass to particles/Conserving energy/Changing particle charge/Creating matter/0/extreme
+
+//create some tests
+http://localhost:8082/quizservice/createTest/6/gNnLnOrh/phyiscs hard test/physics
+http://localhost:8082/quizservice/createTest/4/mhmi0C22/vocabulary/english
+http://localhost:8082/quizservice/createTest/5/fCi9CQ6b/grammar/english
+http://localhost:8082/quizservice/createTest/5/fCi9CQ6b/grammar/english //send again to verify that duplicate test with the same ownerId is disallowed

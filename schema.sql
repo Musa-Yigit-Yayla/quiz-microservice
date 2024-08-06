@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS user (
 CREATE TABLE IF NOT EXISTS question (
                                         id INT PRIMARY KEY AUTO_INCREMENT,
                                         ownerId INT,
-                                        body TEXT NOT NULL,
+                                        body VARCHAR(700) NOT NULL,
                                         answer0 TEXT NOT NULL,
                                         answer1 TEXT NOT NULL,
                                         answer2 TEXT NOT NULL,
@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS question (
                                         answer_index INT,
                                         difficulty VARCHAR(10),
                                         FOREIGN KEY(ownerId) REFERENCES user(id),
+                                        UNIQUE(ownerId, body),
     CHECK(answer_index < 4 AND answer_index >= 0),
     CHECK(difficulty IN ('easy', 'medium', 'hard', 'extreme'))
 );
