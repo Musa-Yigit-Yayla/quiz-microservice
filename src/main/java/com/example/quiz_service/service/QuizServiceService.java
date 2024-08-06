@@ -152,13 +152,63 @@ public class QuizServiceService{
         String pw = this.userRepository.getPassword(userId);
 
         if(pw.equals(password)){
-
             //check whether if the user owns the question
             if(this.questionRepository.ownsQuestion(userId, questionId)){
-
+                this.questionRepository.addQuestionTag(questionId, tag); //add directly
             }
             else{
+                this.questionRepository.tagAddRequest(questionId, tag, userId); //add the tag add request
+            }
+        }
+    }
 
+    /**
+     *
+     * @param userId
+     * @param password
+     * @param testId
+     * @param questionId
+     * if the user is test owner, add the question directly, else create a request
+     */
+    public void testRequestAddQuestion(int userId, String password, int testId, int questionId) {
+        String pw = this.userRepository.getPassword(userId);
+
+        if(pw.equals(password)){
+            int testOwnerId = this.questionRepository.getTestOwnerId(testId);
+
+            if(userId == testOwnerId){
+                //add directly
+                this.questionRepository.addQuestionToTest(testId, questionId);
+            }
+            else{
+                this.questionRepository.testAddRequest(testId, questionId, userId);
+            }
+        }
+    }
+
+    public void evaluateQuestionTagReq(int userId, String password, int questionId, String tag, boolean approve) {
+        String pw = this.userRepository.getPassword(userId);
+
+        if(pw.equals(password) && this.questionRepository.ownsQuestion(userId, questionId)){
+            if(approve){
+                this.questionRepository.addQuestionTag(questionId, tag); //this will automatically have trigger invoked to release
+                //previous tag requests
+            }
+            else{
+                this.questionRepository.rejectTagAddRequests(questionId, tag);
+            }
+        }
+    }
+
+    public void evaluateTestAddReq(int userId, String password, int testId, int questionId, boolean approve) {
+        String pw = this.userRepository.getPassword(userId);
+
+        if(pw.equals(password) && this.questionRepository.getTestOwnerId(testId) == userId){
+            if(approve){
+                this.questionRepository.addQuestionToTest(testId, questionId); //this will have trigger executed
+            }
+            else{
+                this.questionRepository.rejectTestAddRequests(questionId, testId);
             }
         }
     }

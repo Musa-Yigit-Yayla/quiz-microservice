@@ -128,29 +128,26 @@ class QuizServiceController{
      * @param password
      * @param testId
      * @param questionId
-     * @param tag
      * Similarly if the user owns this test, directly adds the tag. Otherwise inserts a request regarding adding the tag.
      */
-    @PostMapping("/testRequestAddQuestion/{userId}/{password}/{testId}/{questionId}/{tag}")
+    @PostMapping("/testRequestAddQuestion/{userId}/{password}/{testId}/{questionId}")
     public void testRequestAddQuestion(@PathVariable int userId, @PathVariable String password, @PathVariable int testId,
-                                       @PathVariable int questionId, @PathVariable String tag){
-        //ToDo
+                                       @PathVariable int questionId){
+        this.quizService.testRequestAddQuestion(userId, password, testId, questionId);
     }
 
-    @DeleteMapping("/evaluateQuestionTagReq/{userId}/{password}/{questionId}/{tag}/{requesterId}/{approve}")
+    @DeleteMapping("/evaluateQuestionTagReq/{userId}/{password}/{questionId}/{tag}/{approve}")
     public void evaluateQuestionTagReq(@PathVariable int userId, @PathVariable String password, @PathVariable int questionId,
-                                       @PathVariable String tag, @PathVariable int requesterId, @PathVariable long approve){
-        //If approve is true, will add the tag to the question, else will only delete the request
-        //REMOVE THE TRIGGER WHICH RELEASES OTHER TAG REQUESTS TOO, TO AVOID CYCLIC TRIGGER EXECUTION
-        //ToDo
+                                       @PathVariable String tag, @PathVariable boolean approve){
+        //If approve is true, will add the tag to the question, else will delete all duplicate request
+        this.quizService.evaluateQuestionTagReq(userId, password, questionId, tag, approve);
     }
 
-    @DeleteMapping("/evaluateTestAddReq/{userId}/{password}/{testId}/{questionId}")
+    @DeleteMapping("/evaluateTestAddReq/{userId}/{password}/{testId}/{questionId}/{approve}")
     public void evaluateTestAddReq(@PathVariable int userId, @PathVariable String password, @PathVariable int testId,
-                                   @PathVariable int questionId){
-        //YOU MAY WANT TO REMOVE THE TRIGGER WHICH RELEASES OTHER ADD REQUESTS TOO, AND DELETE ALL REQUEST AT ONCE IN
-        //REPOSITORY LEVEL
-        //ToDo
+                                   @PathVariable int questionId, @PathVariable boolean approve){
+        //if approve is true, will add the question to the test, else will delete all duplicate request
+        this.quizService.evaluateTestAddReq(userId, password, testId, questionId, approve);
     }
 
     @GetMapping("/getDifficultyDistributions")

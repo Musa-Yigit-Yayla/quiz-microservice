@@ -87,7 +87,7 @@ public class QuestionRepository{
      * @param testId
      * @param questionId
      * @param requesterId id of the user who is requesting to add the question into the test
-     * attempts and adds the given request, if not already present
+     * attempts and adds the given request, if not already present in the request table
      */
     public void testAddRequest(int testId, int questionId, int requesterId){
         String query = "INSERT INTO test_add_request(testId, questionId, requesterId) VALUES (?, ?, ?);";
@@ -99,13 +99,48 @@ public class QuestionRepository{
      * @param questionId
      * @param tag
      * @param requesterId
-     * attempts and adds the given request, if not already present
+     * attempts and adds the given request, if not already present in the request table
      */
     public void tagAddRequest(int questionId, String tag, int requesterId){
         String query = "INSERT INTO question_tag_request(questionId, tag, requesterId) VALUES (?, ?, ?)";
         this.jdbcTemplate.update(query, questionId, tag, requesterId);
     }
 
+    /**
+     *
+     * @param questionId
+     * @param tag
+     * Rejects all the tag requests with the given tag, for the given question
+     */
+    public void rejectTagAddRequests(int questionId, String tag){
+        String query = "DELETE FROM question_tag_request WHERE questionId = ? AND tag = ?;";
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setInt(1, questionId);
+            ps.setString(2, tag);
+            ps.executeUpdate();
+        }
+        catch(Exception e){ System.out.println(e.getMessage());}
+    }
+
+    /**
+     *
+     * @param questionId
+     * @param testId
+     * rejects all the test add requests with the given question and test
+     */
+    public void rejectTestAddRequests(int questionId, int testId) {
+        String query = "DELETE FROM test_add_request WHERE testId = ? AND questionId = ?;";
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setInt(1, testId);
+            ps.setInt(2, questionId);
+            ps.executeUpdate();
+        }
+        catch(Exception e){ System.out.println(e.getMessage());}
+    }
     /**
      *
      * @param userId
