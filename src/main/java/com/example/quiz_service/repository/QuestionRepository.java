@@ -27,7 +27,7 @@ public class QuestionRepository{
 
     public void addQuestion(int userId, String body, String answer0, String answer1,
                                                String answer2, String answer3, int answerIndex, String difficulty){
-        String query = "INSERT INTO question(ownerId, body, answer0, answer1, answer2, answer3, answerIndex, difficulty) " +
+        String query = "INSERT INTO question(ownerId, body, answer0, answer1, answer2, answer3, answer_index, difficulty) " +
                         "VALUES (?, ?, ?, ? ,? ,?, ?, ?);";
         this.jdbcTemplate.update(query, userId, body, answer0, answer1, answer2, answer3, answerIndex, difficulty);
     }

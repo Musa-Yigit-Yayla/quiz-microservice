@@ -49,8 +49,7 @@ CREATE TABLE IF NOT EXISTS test_add_request(
                                                PRIMARY KEY (testId, questionId, requesterId),
     FOREIGN KEY (testId) REFERENCES test(id),
     FOREIGN KEY (questionId) REFERENCES question(id),
-    FOREIGN KEY (requesterId) REFERENCES user(id),
-    CHECK (requesterId <> (SELECT ownerId FROM test WHERE test.id = testId))
+    FOREIGN KEY (requesterId) REFERENCES user(id)
     );
 CREATE TABLE IF NOT EXISTS question_tag_request(
                                                    questionId INT,
@@ -58,8 +57,7 @@ CREATE TABLE IF NOT EXISTS question_tag_request(
                                                    requesterId INT,
                                                    PRIMARY KEY(questionId, requesterId, tag),
     FOREIGN KEY(questionId) REFERENCES question(id),
-    FOREIGN KEY(requesterId) REFERENCES user(id),
-    CHECK (requesterId <> (SELECT ownerId FROM question WHERE question.id = questionId))
+    FOREIGN KEY(requesterId) REFERENCES user(id)
 );
 
 delimiter ^;
@@ -130,7 +128,3 @@ CREATE OR REPLACE VIEW test_tag_distributions AS (
     GROUP BY tag
 )^;
 
-DROP TRIGGER IF EXISTS disallow_owner_qtr;
-CREATE TRIGGER disallow_owner_qtr(
-    BEFORE INSERT ON question_tag_request
-);

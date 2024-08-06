@@ -41,11 +41,10 @@ class QuizServiceController{
         }
     }
     @PostMapping("/addQuestion/{userId}/{password}/{body}/{answer0}/{answer1}/{answer2}/{answer3}/{answerIndex}/{difficulty}")
-    public void addQuestion(@PathVariable("userId") int userId, @PathVariable("password") String password,
-                            @PathVariable("body") String body,
-                            @PathVariable("answer0") String answer0, @PathVariable("answer1") String answer1,
-                            @PathVariable("answer2") String answer2, @PathVariable("answer3") String answer3,
-                            @PathVariable("answerIndex") int answerIndex, @PathVariable("difficulty") String difficulty){
+    public void addQuestion(@PathVariable int userId, @PathVariable String password,
+                            @PathVariable String body, @PathVariable String answer0, @PathVariable String answer1,
+                            @PathVariable String answer2, @PathVariable String answer3,
+                            @PathVariable int answerIndex, @PathVariable String difficulty){
         this.quizService.addQuestion(userId, password, body, answer0, answer1, answer2, answer3, answerIndex, difficulty);
     }
 

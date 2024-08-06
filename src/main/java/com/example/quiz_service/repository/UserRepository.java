@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 
 @Repository
 public class UserRepository {
+    public static final String alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
     private final JdbcTemplate jdbcTemplate;
     private final Connection connection;
 
@@ -27,7 +29,7 @@ public class UserRepository {
         final int PASSWORD_LENGTH = 8;
 
         for(int i = 0; i < PASSWORD_LENGTH; i++){
-            password += (char) (Math.random() * 128);
+            password += UserRepository.alphanumeric.charAt((int)(Math.random() * alphanumeric.length()));
         }
 
         try{
