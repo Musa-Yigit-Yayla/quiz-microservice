@@ -63,6 +63,9 @@ http://localhost:8082/quizservice/testRequestAddQuestion/3/CnN1kboZ/2/15 //dupli
 http://localhost:8082/quizservice/testRequestAddQuestion/6/gNnLnOrh/2/15
 
 http://localhost:8082/quizservice/evaluateTestAddReq/1/qnkw8LXU/1/8/true //unauthorized user approve attempt
+http://localhost:8082/quizservice/evaluateTestAddReq/6/gNnLnOrh/1/8/true //test owner approves (executes release trigger)
+http://localhost:8082/quizservice/evaluateTestAddReq/4/mhmi0C22/2/15/false //test owner disapproves, (logic to release duplicate requests are implemented in application level)
+
 
 
 
