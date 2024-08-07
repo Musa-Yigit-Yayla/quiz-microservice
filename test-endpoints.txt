@@ -66,7 +66,22 @@ http://localhost:8082/quizservice/evaluateTestAddReq/1/qnkw8LXU/1/8/true //unaut
 http://localhost:8082/quizservice/evaluateTestAddReq/6/gNnLnOrh/1/8/true //test owner approves (executes release trigger)
 http://localhost:8082/quizservice/evaluateTestAddReq/4/mhmi0C22/2/15/false //test owner disapproves, (logic to release duplicate requests are implemented in application level)
 
+http://localhost:8082/quizservice/testRequestAddQuestion/6/gNnLnOrh/3/12
+http://localhost:8082/quizservice/testRequestAddQuestion/6/gNnLnOrh/1/12
+http://localhost:8082/quizservice/testRequestAddQuestion/6/gNnLnOrh/2/12
+http://localhost:8082/quizservice/testRequestAddQuestion/1/qnkw8LXU/2/13
 
+http://localhost:8082/quizservice/getTestAddRequests/4/mhmi0C22/vocabulary
+
+http://localhost:8082/quizservice/questionRequestTag/5/fCi9CQ6b/17/physics
+http://localhost:8082/quizservice/questionRequestTag/5/fCi9CQ6b/17/C2
+http://localhost:8082/quizservice/evaluateQuestionTagReq/4/mhmi0C22/17/physics/false
+
+http://localhost:8082/quizservice/updateQuestion/3/CnN1kboZ/14/Select the primary component of natural gas/Ethanol/Propane/Butane/Methane/3/extreme
+http://localhost:8082/quizservice/deleteQuestion/1/qnkw8LXU/2
+http://localhost:8082/quizservice/deleteQuestion/1/qnkw8LXU/2 //duplicate testing
+
+quizservice/updateTest/{userId}/{password}/grammar/grammar-medium/English-B2
 
 
 

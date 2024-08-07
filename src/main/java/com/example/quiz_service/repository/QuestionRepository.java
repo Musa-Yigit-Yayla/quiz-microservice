@@ -200,7 +200,7 @@ public class QuestionRepository{
         int testId = -1;
         List<TestAddRequestDto> result = null;
 
-        String query0 = "SELECT testId from test WHERE ownerId = ? AND name = ?;";
+        String query0 = "SELECT id from test WHERE ownerId = ? AND name = ?;";
 
         try {
             PreparedStatement ps = this.connection.prepareStatement(query0);
@@ -209,14 +209,14 @@ public class QuestionRepository{
 
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                testId = rs.getInt("testId");
+                testId = rs.getInt("id");
             }
 
             if(testId != -1){
                 result = new ArrayList<>();
 
-                String query1  = "SELECT * FROM test_add_request WHERE testIs = ?;";
-                ps.clearParameters(); //!!! CAREFUL HERE !!!
+                String query1  = "SELECT * FROM test_add_request AS tar JOIN test ON (tar.testId = test.id) WHERE tar.testId = ?;";
+                ps = this.connection.prepareStatement(query1);
                 ps.setInt(1, testId);
                 rs = ps.executeQuery();
 
@@ -225,6 +225,8 @@ public class QuestionRepository{
                     tarDTO.setTestOwnerId(this.getTestOwnerId(testId));
                     tarDTO.setQuestionId(rs.getInt("questionId"));
                     tarDTO.setRequesterId(rs.getInt("requesterId"));
+                    tarDTO.setTestId(rs.getInt("id"));
+                    tarDTO.setTestName(rs.getString("name"));
                     result.add(tarDTO);
                 }
             }
@@ -295,7 +297,7 @@ public class QuestionRepository{
     public void updateQuestion(int questionId, String body, String answer0, String answer1, String answer2,
                                String answer3, int answerIndex, String difficulty) {
         String query = "UPDATE question SET body = ?, answer0 = ?, answer1 = ?, answer2 = ?, answer3 = ?, " +
-                "answer_index = ?, difficulty = ? WHERE questionId = ?;";
+                "answer_index = ?, difficulty = ? WHERE id = ?;";
 
         try{
             PreparedStatement ps = this.connection.prepareStatement(query);
