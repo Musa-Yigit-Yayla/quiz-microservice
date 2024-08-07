@@ -21,9 +21,9 @@ public class DataConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/quiz_service_db");
-        dataSource.setUsername("root");
-        dataSource.setPassword("cs353db");
+        dataSource.setUrl(System.getenv("SPRING_DATASOURCE_URL"));
+        dataSource.setUsername(System.getenv("DB_USER"));
+        dataSource.setPassword(System.getenv("DB_PASSWORD"));
 
         logger.debug("DataSource configured with URL: {}", dataSource.getUrl());
         return dataSource;

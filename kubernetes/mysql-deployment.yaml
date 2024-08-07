@@ -18,13 +18,13 @@ spec:
           imagePullPolicy: Always
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: "rootpassword"
+              value: rootpassword
             - name: MYSQL_DATABASE
-              value: "mydb"
+              value: mydb
             - name: MYSQL_USER
-              value: "user"
+              value: user
             - name: MYSQL_PASSWORD
-              value: "password"
+              value: password
           ports:
             - containerPort: 3306
           volumeMounts:

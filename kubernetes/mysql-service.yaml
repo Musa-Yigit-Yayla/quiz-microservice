@@ -7,6 +7,6 @@ spec:
     app: mysql
   ports:
     - protocol: TCP
-      port: 3307
+      port: 3306
       targetPort: 3306
   type: ClusterIP

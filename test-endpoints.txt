@@ -106,6 +106,7 @@ http://localhost:8082/quizservice/testRequestAddQuestion/1/qnkw8LXU/2/15
 http://localhost:8082/quizservice/testRequestAddQuestion/1/qnkw8LXU/3/27
 
 http://localhost:8082/quizservice/getSentTestAddRequests/1/qnkw8LXU
+http://localhost:8082/quizservice/getSentQuestionTagRequests/6/gNnLnOrh
 
 
 

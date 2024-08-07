@@ -14,18 +14,14 @@ spec:
     spec:
       containers:
         - name: quiz-service
-          image: quiz-service:latest
+          image: quiz-service:new
           imagePullPolicy: Never
           ports:
-            - containerPort: 8082
+            - containerPort: 8080
           env:
-            - name: DB_HOST
-              value: "mysql-service" #this should match
-            - name: DB_PORT
-              value: "3307" #default mysql port
-            - name: DB_NAME
-              value: "mydb"
+            - name: DB_DATA_SOURCE_URL
+              value: jdbc:mysql://mysql-service:3306/mydb
             - name: DB_USER
-              value: "user"
+              value: user
             - name: DB_PASSWORD
-              value: "password"
+              value: password
