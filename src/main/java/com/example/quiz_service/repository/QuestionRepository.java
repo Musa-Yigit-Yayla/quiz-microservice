@@ -454,4 +454,59 @@ public class QuestionRepository{
             return result;
         }
     }
+
+    public List<TestAddRequestDto> getSentTestAddRequests(int userId) {
+        String query = "SELECT * FROM test_add_request AS tar JOIN test ON(tar.testId = test.id) WHERE requesterId = ?;";
+        List<TestAddRequestDto> list = null;
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+            list = new ArrayList<>();
+
+            while(rs.next()){
+                TestAddRequestDto dto = new TestAddRequestDto();
+
+                dto.setRequesterId(rs.getInt("requesterId"));
+                dto.setQuestionId(rs.getInt("questionId"));
+                dto.setTestId(rs.getInt("testId"));
+                dto.setTestName(rs.getString("name"));
+                dto.setTestOwnerId(rs.getInt("ownerId"));
+                
+                list.add(dto);
+            }
+        }
+        catch(Exception e){ System.out.println(e.getMessage());}
+        finally{
+            return list;
+        }
+    }
+
+    public List<QuestionTagRequestDto> getSentQuestionTagRequests(int userId) {
+        String query = "SELECT * FROM question JOIN question_tag_request ON (id = questionId) WHERE requesterId = ?;";
+        List<QuestionTagRequestDto> list = null;
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            list = new ArrayList<>();
+
+            while(rs.next()){
+                QuestionTagRequestDto dto = new QuestionTagRequestDto();
+                dto.setQuestionId(rs.getInt("questionId"));
+                dto.setRequesterId(rs.getInt("requesterId"));
+                dto.setTag(rs.getString("tag"));
+                dto.setQuestionOwnerId(rs.getInt("ownerId"));
+
+                list.add(dto);
+            }
+        }
+        catch(Exception e){ System.out.println(e.getMessage());}
+        finally{
+            return list;
+        }
+    }
 }

@@ -84,7 +84,28 @@ http://localhost:8082/quizservice/deleteQuestion/1/qnkw8LXU/2 //duplicate testin
 http://localhost:8082/quizservice/updateTest/3/CnN1kboZ/grammar/grammar-medium/English-B2 //unauthorized user attempts
 http://localhost:8082/quizservice/updateTest/5/fCi9CQ6b/grammar/grammar-medium/English-B2
 
-http://localhost:8082/quizservice/deleteQuestion/3/CnN1kboZ/12
+http://localhost:8082/quizservice/deleteQuestion/3/CnN1kboZ/12 			//delete for trigger testing of question deletion
+http://localhost:8082/quizservice/questionRequestTag/5/fCi9CQ6b/13/Biology
+http://localhost:8082/quizservice/questionRequestTag/3/CnN1kboZ/13/Chemistry
+http://localhost:8082/quizservice/deleteQuestion/3/CnN1kboZ/13 			//delete for trigger testing
+http://localhost:8082/quizservice/deleteTest/6/gNnLnOrh/physics hard test
+
+http://localhost:8082/quizservice/createTest/5/fCi9CQ6b/reading/english
+http://localhost:8082/quizservice/testRequestAddQuestion/1/qnkw8LXU/5/15
+http://localhost:8082/quizservice/deleteTest/5/fCi9CQ6b/reading  //for trigger testing
+
+http://localhost:8082/quizservice/questionRequestTag/4/mhmi0C22/17/vocabulary
+http://localhost:8082/quizservice/questionRequestTag/6/gNnLnOrh/17/vocabulary
+
+http://localhost:8082/quizservice/questionRequestTag/6/gNnLnOrh/17/C1
+http://localhost:8082/quizservice/getQuestionTagDistributions
+http://localhost:8082/quizservice/getTestTagDistributions
+http://localhost:8082/quizservice/getTestTagDistributions
+
+http://localhost:8082/quizservice/testRequestAddQuestion/1/qnkw8LXU/2/15
+http://localhost:8082/quizservice/testRequestAddQuestion/1/qnkw8LXU/3/27
+
+http://localhost:8082/quizservice/getSentTestAddRequests/1/qnkw8LXU
 
 
 

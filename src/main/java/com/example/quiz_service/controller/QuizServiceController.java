@@ -159,6 +159,16 @@ class QuizServiceController{
         this.quizService.evaluateTestAddReq(userId, password, testId, questionId, approve);
     }
 
+    @GetMapping("/getSentTestAddRequests/{userId}/{password}")
+    public List<TestAddRequestDto> getSentTestAddRequests(@PathVariable int userId, @PathVariable String password){
+        return this.quizService.getSentTestAddRequests(userId, password);
+    }
+
+    @GetMapping("/getSentQuestionTagRequests/{userId}/{password}")
+    public List<QuestionTagRequestDto> getSentQuestionTagRequests(@PathVariable int userId, @PathVariable String password){
+        return this.quizService.getSentQuestionTagRequests(userId, password);
+    }
+
     @GetMapping("/getDifficultyDistributions")
     public List<DifficultyDistributionDto> getDifficultyDistributions(){
         return this.quizService.getDifficultyDistributions();
@@ -168,6 +178,7 @@ class QuizServiceController{
     public List<QuestionTagDistributionDto> getQuestionTagDistributions(){
         return this.quizService.getQuestionTagDistributions();
     }
+
     @GetMapping("/getTestTagDistributions")
     public List<TestTagDistributionDto> getTestTagDistributions(){
         return this.quizService.getTestTagDistributions();

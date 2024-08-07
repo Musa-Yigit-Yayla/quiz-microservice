@@ -224,4 +224,24 @@ public class QuizServiceService{
     public QuestionTagsDto getQuestionTags(int questionId) {
         return this.questionRepository.getQuestionTags(questionId);
     }
+
+    public List<TestAddRequestDto> getSentTestAddRequests(int userId, String password) {
+        String pw = this.userRepository.getPassword(userId);
+        List<TestAddRequestDto> result = null;
+
+        if(password.equals(pw)){
+            result = this.questionRepository.getSentTestAddRequests(userId);
+        }
+        return result;
+    }
+
+    public List<QuestionTagRequestDto> getSentQuestionTagRequests(int userId, String password) {
+        String pw = this.userRepository.getPassword(userId);
+        List<QuestionTagRequestDto> result = null;
+
+        if(password.equals(pw)){
+            result = this.questionRepository.getSentQuestionTagRequests(userId);
+        }
+        return result;
+    }
 }
