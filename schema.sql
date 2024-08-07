@@ -111,6 +111,16 @@ BEGIN
     WHERE testId = OLD.id;
 END^;
 
+DROP TRIGGER IF EXISTS disallow_request_existing_tag^;
+CREATE TRIGGER disallow_request_existing_tag
+    BEFORE INSERT ON question_tag_request
+    FOR EACH ROW
+BEGIN
+    IF (NEW.tag IN (SELECT tag FROM question_tags WHERE questionId = NEW.questionId)) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT  = 'Tag already exists for the given question, sent request is not registered';
+    END IF;
+END^;
+
 CREATE OR REPLACE VIEW difficulty_distributions AS (
     SELECT COUNT(id) AS question_count, difficulty
     FROM question

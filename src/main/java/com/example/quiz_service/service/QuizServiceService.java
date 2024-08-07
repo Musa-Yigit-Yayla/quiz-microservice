@@ -126,12 +126,15 @@ public class QuizServiceService{
      *
      * @param userId
      * @param password
-     * @param name
+     * @param name test name
      */
     public void deleteTest(int userId, String password, String name){
         String pw = this.userRepository.getPassword(userId);
 
+        //QuestionRepository.logger.info("Debug: about to check if condition in quizService.deleteTest, ownsTest yields " +
+        //        this.questionRepository.ownsTest(userId, name));
         if(pw.equals(password) && this.questionRepository.ownsTest(userId, name)){
+            //QuestionRepository.logger.info("Debug: if condition in quizService.deleteTest yields true");
             this.questionRepository.deleteTest(userId, name);
         }
     }

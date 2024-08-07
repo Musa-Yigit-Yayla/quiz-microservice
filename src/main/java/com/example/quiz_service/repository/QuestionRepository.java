@@ -1,8 +1,11 @@
 package com.example.quiz_service.repository;
 import com.example.quiz_service.Dto.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j; //for printing debug statements
 
 import java.sql.SQLException;
 import javax.sql.DataSource;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 public class QuestionRepository{
     private JdbcTemplate jdbcTemplate;
     private Connection connection;
+    public static final Logger logger = LoggerFactory.getLogger(QuestionRepository.class);
 
     @Autowired
     public QuestionRepository(JdbcTemplate jdbcTemplate, DataSource dataSource) throws Exception{
@@ -156,9 +160,7 @@ public class QuestionRepository{
             ps.setString(2, testName);
             ResultSet rs = ps.executeQuery();
 
-            if(rs.next()){
-                owns = true;
-            }
+            owns = rs.next();
         }
         catch(Exception e){
             System.out.println(e.getMessage());
@@ -354,6 +356,7 @@ public class QuestionRepository{
             ps.setInt(1, userId);
             ps.setString(2, name);
 
+            //logger.info("Debug: about to executeUpdate on QuestionRepository.deleteTest");
             ps.executeUpdate();
         }
         catch(Exception e){ System.out.println(e.getMessage());}

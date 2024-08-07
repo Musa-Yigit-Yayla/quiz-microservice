@@ -81,7 +81,10 @@ http://localhost:8082/quizservice/updateQuestion/3/CnN1kboZ/14/Select the primar
 http://localhost:8082/quizservice/deleteQuestion/1/qnkw8LXU/2
 http://localhost:8082/quizservice/deleteQuestion/1/qnkw8LXU/2 //duplicate testing
 
-quizservice/updateTest/{userId}/{password}/grammar/grammar-medium/English-B2
+http://localhost:8082/quizservice/updateTest/3/CnN1kboZ/grammar/grammar-medium/English-B2 //unauthorized user attempts
+http://localhost:8082/quizservice/updateTest/5/fCi9CQ6b/grammar/grammar-medium/English-B2
+
+http://localhost:8082/quizservice/deleteQuestion/3/CnN1kboZ/12
 
 
 
