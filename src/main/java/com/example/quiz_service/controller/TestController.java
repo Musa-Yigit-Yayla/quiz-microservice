@@ -19,7 +19,7 @@ public class TestController {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "Database connection failed: " + e.getMessage();
+            return "Database connection failed: " + e.getMessage() + "\nStack trace: " + e.getStackTrace();
         }
     }
 }

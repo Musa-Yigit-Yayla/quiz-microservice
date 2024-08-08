@@ -14,12 +14,18 @@ public class UserRepository {
     public static final String alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     private final JdbcTemplate jdbcTemplate;
-    private final Connection connection;
+    private Connection connection;
 
     @Autowired
-    public UserRepository(JdbcTemplate jdbcTemplate, DataSource dataSource) throws Exception {
+    public UserRepository(JdbcTemplate jdbcTemplate, DataSource dataSource){
         this.jdbcTemplate = jdbcTemplate;
-        this.connection = dataSource.getConnection();
+
+        try {
+            this.connection = dataSource.getConnection();
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public String addUser(){

@@ -24,9 +24,15 @@ public class QuestionRepository{
     public static final Logger logger = LoggerFactory.getLogger(QuestionRepository.class);
 
     @Autowired
-    public QuestionRepository(JdbcTemplate jdbcTemplate, DataSource dataSource) throws Exception{
+    public QuestionRepository(JdbcTemplate jdbcTemplate, DataSource dataSource){
         this.jdbcTemplate = jdbcTemplate;
-        this.connection = dataSource.getConnection();
+
+        try {
+            this.connection = dataSource.getConnection();
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void addQuestion(int userId, String body, String answer0, String answer1,

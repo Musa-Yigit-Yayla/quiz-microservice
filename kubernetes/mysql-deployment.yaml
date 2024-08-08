@@ -21,10 +21,6 @@ spec:
               value: rootpassword
             - name: MYSQL_DATABASE
               value: mydb
-            - name: MYSQL_USER
-              value: user
-            - name: MYSQL_PASSWORD
-              value: password
           ports:
             - containerPort: 3306
           volumeMounts:

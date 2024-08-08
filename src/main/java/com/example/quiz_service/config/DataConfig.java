@@ -21,7 +21,7 @@ public class DataConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl(System.getenv("SPRING_DATASOURCE_URL"));
+        dataSource.setUrl(System.getenv("DB_DATA_SOURCE_URL"));
         dataSource.setUsername(System.getenv("DB_USER"));
         dataSource.setPassword(System.getenv("DB_PASSWORD"));
 
