@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: quiz-service
-          image: quiz-service:new
+          image: quiz-service:newest
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
