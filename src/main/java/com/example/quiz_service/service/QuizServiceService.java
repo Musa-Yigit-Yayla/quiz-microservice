@@ -19,8 +19,9 @@ public class QuizServiceService{
         this.questionRepository = questionRepository;
     }
 
-    public QuestionDto getQuestion(String topic, String difficulty){
-        return null;
+    public List<QuestionDto> filterQuestion(String tag, String difficulty){
+        return this.questionRepository.filterQuestion(tag, difficulty);
+
     }
 
     public String createUser() throws Exception{

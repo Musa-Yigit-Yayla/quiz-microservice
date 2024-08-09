@@ -16,15 +16,9 @@ class QuizServiceController{
         this.quizService = quizServiceService;
     }
 
-    @GetMapping("/getQuestion/{topic}/{difficulty}")
-    public String getQuestion(@PathVariable("topic") String topic, @PathVariable("difficulty") String difficulty){
-        String result = "xdddddaaddd";
-        QuestionDto response = this.quizService.getQuestion(topic, difficulty);
-
-        if(response != null){
-            result = response.toString();
-        }
-        return result;
+    @GetMapping("/filterQuestion/{tag}/{difficulty}")
+    public List<QuestionDto> filterQuestion(@PathVariable("tag") String tag, @PathVariable("difficulty") String difficulty){
+        return this.quizService.filterQuestion(tag, difficulty);
     }
 
     /**

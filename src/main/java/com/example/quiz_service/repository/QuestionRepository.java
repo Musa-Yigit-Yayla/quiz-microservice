@@ -515,4 +515,51 @@ public class QuestionRepository{
             return list;
         }
     }
+
+    /**
+     *
+     * @param tag
+     * @param difficulty
+     * @return a list of questions where they have the given difficulty and one of their tags have a string match
+     * with the given tag (given tag can be a substring of one of the question's tags)
+     */
+    public List<QuestionDto> filterQuestion(String tag, String difficulty) {
+        String query = "WITH filtered_question AS " +
+                "(SELECT * FROM question WHERE EXISTS (SELECT tag FROM question_tags WHERE questionId = question.id AND tag LIKE ?)) " +
+                "SELECT * FROM filtered_question WHERE difficulty = ? ORDER BY id ASC;";
+
+        List<QuestionDto> result = null;
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            String tagRegex = "%" + tag + "%";
+            ps.setString(1, tagRegex);
+            ps.setString(2, difficulty);
+            ResultSet rs = ps.executeQuery();
+            result = new ArrayList<>();
+
+            while(rs.next()){
+                QuestionDto qDto = new QuestionDto();
+
+                qDto.setId(rs.getInt("id"));
+                qDto.setOwnerId(rs.getInt("ownerId"));
+                qDto.setQuestionBody(rs.getString("body"));
+
+                String[] arr = {rs.getString("answer0"), rs.getString("answer1"),
+                        rs.getString("answer2"), rs.getString("answer3"),};
+                List<String> answers = Arrays.asList(arr);
+
+                qDto.setOptions(answers);
+                qDto.setAnswerIndex(rs.getInt("answer_index"));
+                qDto.setDifficulty(rs.getString("difficulty"));
+
+                result.add(qDto);
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            return result;
+        }
+    }
 }
