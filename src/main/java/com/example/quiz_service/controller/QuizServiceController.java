@@ -163,6 +163,16 @@ class QuizServiceController{
         return this.quizService.getSentQuestionTagRequests(userId, password);
     }
 
+    @GetMapping("/getTests")
+    public List<TestDto> getTests(){
+        return this.quizService.getTests();
+    }
+
+    @GetMapping("/getTest/{testId}")
+    public TestWithQuestionsDto getTest(@PathVariable int testId){
+        return this.quizService.getTest(testId);
+    }
+
     @GetMapping("/getDifficultyDistributions")
     public List<DifficultyDistributionDto> getDifficultyDistributions(){
         return this.quizService.getDifficultyDistributions();

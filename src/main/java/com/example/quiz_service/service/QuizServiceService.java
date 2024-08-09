@@ -245,4 +245,12 @@ public class QuizServiceService{
         }
         return result;
     }
+
+    public List<TestDto> getTests() {
+        return this.questionRepository.getTests();
+    }
+
+    public TestWithQuestionsDto getTest(int testId) {
+        return this.questionRepository.getTest(testId);
+    }
 }

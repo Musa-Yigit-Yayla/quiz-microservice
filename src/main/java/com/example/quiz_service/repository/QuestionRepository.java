@@ -562,4 +562,86 @@ public class QuestionRepository{
             return result;
         }
     }
+
+    public List<TestDto> getTests() {
+        String query = "SELECT * FROM test";
+        List<TestDto> result = null;
+
+        try{
+            PreparedStatement ps = this.connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            result = new ArrayList<>();
+
+            while(rs.next()){
+                TestDto dto = new TestDto();
+                dto.setId(rs.getInt("id"));
+                dto.setOwnerId(rs.getInt("ownerId"));
+                dto.setName(rs.getString("name"));
+                dto.setTag(rs.getString("tag"));
+
+                result.add(dto);
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            return result;
+        }
+    }
+
+    public TestWithQuestionsDto getTest(int testId) {
+        String query0 = "SELECT * FROM test WHERE id = ?;";
+        String query1 = "SELECT * FROM question WHERE id IN (SELECT questionId FROM test_questions WHERE testId = ?);";
+
+        TestWithQuestionsDto dto = null;
+
+        try{
+            PreparedStatement ps0 = this.connection.prepareStatement(query0);
+            PreparedStatement ps1 = this.connection.prepareStatement(query1);
+
+            ps0.setInt(1, testId);
+            ps1.setInt(1, testId);
+
+            ResultSet rs0 = ps0.executeQuery();
+            ResultSet rs1 = ps1.executeQuery();
+
+            dto = new TestWithQuestionsDto();
+            TestDto testDto = new TestDto();
+            ArrayList<QuestionDto> questions = new ArrayList<>();
+
+            if(rs0.next()){
+                testDto.setId(rs0.getInt("id"));
+                testDto.setOwnerId(rs0.getInt("ownerId"));
+                testDto.setName(rs0.getString("name"));
+                testDto.setTag(rs0.getString("tag"));
+            }
+
+            while(rs1.next()){
+                QuestionDto qDto = new QuestionDto();
+
+                qDto.setId(rs1.getInt("id"));
+                qDto.setOwnerId(rs1.getInt("ownerId"));
+                qDto.setQuestionBody(rs1.getString("body"));
+
+                String[] arr = {rs1.getString("answer0"), rs1.getString("answer1"),
+                        rs1.getString("answer2"), rs1.getString("answer3"),};
+                List<String> answers = Arrays.asList(arr);
+
+                qDto.setOptions(answers);
+                qDto.setAnswerIndex(rs1.getInt("answer_index"));
+                qDto.setDifficulty(rs1.getString("difficulty"));
+
+                questions.add(qDto);
+            }
+            dto.setTestDto(testDto);
+            dto.setQuestions(questions);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            return dto;
+        }
+    }
 }
